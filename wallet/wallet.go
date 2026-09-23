@@ -11,11 +11,10 @@ type SecureWallet struct {
 	balance float64
 }
 
-// TODO (Крок 1, найкраща практика): Deposit() використовує
-// приймач-вказівник, бо змінює стан. Для консистентності Balance()
-// теж має використовувати приймач-вказівник — виправте сигнатуру
-// нижче з "(w SecureWallet)" на "(w *SecureWallet)".
-func (w SecureWallet) Balance() float64 {
+// Balance повертає поточний стан гаманця.
+// Використовуємо приймач-вказівник для узгодження з Deposit(),
+// який змінює стан об'єкта.
+func (w *SecureWallet) Balance() float64 {
 	return w.balance
 }
 
@@ -36,5 +35,7 @@ func (w *SecureWallet) Deposit(amt float64) {
 // wallets) і звертайтеся до wallets[i] напряму — тоді Go зможе
 // автоматично взяти адресу справжнього елемента зрізу.
 func ApplyDeposits(wallets []SecureWallet, amt float64) {
-	// TODO: ваш код тут
+	for i := range wallets {
+		wallets[i].Deposit(amt)
+	}
 }
