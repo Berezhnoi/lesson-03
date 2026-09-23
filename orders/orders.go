@@ -28,13 +28,7 @@ func NewOrderService(store OrderStore) *OrderService {
 }
 
 // PlaceOrder виконує вставку замовлення через store.
-//
-// TODO (Завдання 2.2): реалізуйте цей метод.
-//   - викличте s.store.Exec(...) із SQL-запитом і аргументами
-//     orderID та amount;
-//   - поверніть помилку, якщо Exec її повернув;
-//   - інакше поверніть nil.
 func (s *OrderService) PlaceOrder(orderID string, amount float64) error {
-	// TODO: ваш код тут
-	return nil
+	const query = "INSERT INTO orders (id, amount) VALUES (?, ?)"
+	return s.store.Exec(query, orderID, amount)
 }
